@@ -1,0 +1,8 @@
+#PBS -N x
+
+cd $PBS_O_WORKDIR
+
+./app
+
+#Remember to have an empty line after the last command
+

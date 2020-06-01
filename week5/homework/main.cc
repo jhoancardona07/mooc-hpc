@@ -25,7 +25,7 @@ float * simulate_ref(const float alpha, const long n_segments, const int n_steps
 
   const float dx = 1.0f/(float)n_segments;
   const float phase = 0.5f;
-  
+
   for(int t = 0; t < n_steps; t++) {
 #pragma omp parallel for simd
     for(long i = start_segment; i < last_segment; i++) {
@@ -82,8 +82,8 @@ int main(int argc, char** argv) {
   float *d_ref = (float *) _mm_malloc(sizeof(float)*n_segments, 4096);
   if(rank == 0) {
     initialize_buffers(alpha, n_segments, d_buf1, d_buf2);
-  } 
-  
+  }
+
   MPI_Bcast(d_buf1, n_segments, MPI_FLOAT, 0, MPI_COMM_WORLD);
   MPI_Bcast(d_buf2, n_segments, MPI_FLOAT, 0, MPI_COMM_WORLD);
   

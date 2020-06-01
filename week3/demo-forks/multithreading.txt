@@ -1,0 +1,3 @@
+In child  thread at 0x6040e0: 'uninitialized':
+In parent thread at 0x6040e0: 'I'm a little teapot, short and stout':
+In child  thread at 0x6040e0: 'I'm a little teapot, short and stout':

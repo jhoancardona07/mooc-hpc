@@ -1,0 +1,308 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C++ Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 17.0.2.174 Build 20170213
+
+Compiler options: -I/opt/intel/compilers_and_libraries_2017.2.174/linux/mpi/intel64/include -c -qopenmp -qopt-report=5 -xMIC-AVX512 -c -o stencil.o
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: ApplyStencil<float>(ImageClass<float> &, ImageClass<float> &, int, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (ApplyStencil<float>(ImageClass<float> &, ImageClass<float> &, int, int)) [1/2=50.0%] stencil.cc(4,104)
+
+
+    Report from: OpenMP optimizations [openmp]
+
+stencil.cc(16:1-16:1):OMP:_Z12ApplyStencilIfEvR10ImageClassIT_ES3_ii:  OpenMP DEFINED LOOP WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at stencil.cc(17,3)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at stencil.cc(20,5)
+   <Peeled loop for vectorization>
+      remark #15389: vectorization support: reference out has unaligned access   [ stencil.cc(28,7) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,18) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,44) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,66) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,51) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,51) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 16
+      remark #15309: vectorization support: normalized vectorization overhead 0.627
+      remark #15301: PEEL LOOP WAS VECTORIZED
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at stencil.cc(20,5)
+      remark #15388: vectorization support: reference out has aligned access   [ stencil.cc(28,7) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,18) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,44) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,66) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,51) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,51) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15412: vectorization support: streaming store was generated for out   [ stencil.cc(28,7) ]
+      remark #15412: vectorization support: streaming store was generated for out   [ stencil.cc(28,7) ]
+      remark #15412: vectorization support: streaming store was generated for out   [ stencil.cc(28,7) ]
+      remark #15412: vectorization support: streaming store was generated for out   [ stencil.cc(28,7) ]
+      remark #15305: vectorization support: vector length 64
+      remark #15309: vectorization support: normalized vectorization overhead 0.322
+      remark #15301: OpenMP SIMD LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15450: unmasked unaligned unit stride loads: 9 
+      remark #15467: unmasked aligned streaming stores: 4 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 44 
+      remark #15477: vector cost: 1.790 
+      remark #15478: estimated potential speedup: 13.790 
+      remark #15487: type converts: 2 
+      remark #15488: --- end vector cost summary ---
+      remark #15500: saturating downconvert: 2 
+   LOOP END
+
+   LOOP BEGIN at stencil.cc(20,5)
+   <Remainder loop for vectorization>
+      remark #15389: vectorization support: reference out has unaligned access   [ stencil.cc(28,7) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,18) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,44) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,66) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,51) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,51) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 16
+      remark #15309: vectorization support: normalized vectorization overhead 0.627
+      remark #15301: REMAINDER LOOP WAS VECTORIZED
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+stencil.cc(21,18):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(21,18):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(21,18):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(21,18):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(21,18):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(21,18):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(21,18):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(21,18):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(21,18):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(21,18):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(21,18):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(21,18):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(22,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(22,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(22,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(22,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(22,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(22,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(22,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(22,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(22,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(22,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(22,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(22,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(23,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(23,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(23,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(23,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(23,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(23,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(23,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(23,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(23,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(23,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(23,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(23,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 4 }, step { 4 }, types { F32-V512, F32-V512, F32-V512 }, number of elements { 16 }, select mask { 0x000000007 }.
+stencil.cc(4,104):remark #34051: REGISTER ALLOCATION : [_Z12ApplyStencilIfEvR10ImageClassIT_ES3_ii] stencil.cc:4
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   63[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm31 k0-k7]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   47[ rax rdx rcx rbx rsi rdi r8-r15 zmm0-zmm31 k1]
+        
+    Routine temporaries
+        Total         :     346
+            Global    :      58
+            Local     :     288
+        Regenerable   :      53
+        Spilled       :      20
+        
+    Routine stack
+        Variables     :      48 bytes*
+            Reads     :       4 [0.00e+00 ~ 0.0%]
+            Writes    :      10 [2.60e+01 ~ 0.6%]
+        Spills        :     176 bytes*
+            Reads     :      36 [1.13e+02 ~ 2.5%]
+            Writes    :      28 [5.50e+01 ~ 1.2%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: ApplyStencil<png_byte>(ImageClass<png_byte> &, ImageClass<png_byte> &, int, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (ApplyStencil<png_byte>(ImageClass<png_byte> &, ImageClass<png_byte> &, int, int)) [2/2=100.0%] stencil.cc(4,104)
+
+
+    Report from: OpenMP optimizations [openmp]
+
+stencil.cc(16:1-16:1):OMP:_Z12ApplyStencilIhEvR10ImageClassIT_ES3_ii:  OpenMP DEFINED LOOP WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at stencil.cc(17,3)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at stencil.cc(20,5)
+   <Peeled loop for vectorization>
+      remark #15389: vectorization support: reference out has unaligned access   [ stencil.cc(28,7) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,18) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,44) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,66) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,51) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,51) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15335: peel loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 0.017
+      remark #25015: Estimate of max trip count of loop=31
+   LOOP END
+
+   LOOP BEGIN at stencil.cc(20,5)
+      remark #15388: vectorization support: reference out has aligned access   [ stencil.cc(28,7) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,18) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,44) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,66) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,51) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,51) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15412: vectorization support: streaming store was generated for out   [ stencil.cc(28,7) ]
+      remark #15305: vectorization support: vector length 32
+      remark #15309: vectorization support: normalized vectorization overhead 0.536
+      remark #15301: OpenMP SIMD LOOP WAS VECTORIZED
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15450: unmasked unaligned unit stride loads: 9 
+      remark #15467: unmasked aligned streaming stores: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 48 
+      remark #15477: vector cost: 2.150 
+      remark #15478: estimated potential speedup: 16.640 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at stencil.cc(20,5)
+   <Remainder loop for vectorization>
+      remark #15388: vectorization support: reference out has aligned access   [ stencil.cc(28,7) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,18) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,44) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(21,66) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(22,51) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,3) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,29) ]
+      remark #15389: vectorization support: reference in has unaligned access   [ stencil.cc(23,51) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 0.017
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+stencil.cc(21,18):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(21,18):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(21,18):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 1 }, step { 1 }, types { I8-V256, I8-V256, I8-V256 }, number of elements { 32 }, select mask { 0x000000007 }.
+stencil.cc(22,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(22,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(22,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 1 }, step { 1 }, types { I8-V256, I8-V256, I8-V256 }, number of elements { 32 }, select mask { 0x000000007 }.
+stencil.cc(23,3):remark #34060: alignment of adjacent dense (unit-strided stencil) loads is (alignment, offset): (1, 0)
+stencil.cc(23,3):remark #34050: optimization of adjacent dense (unit-strided stencil) loads seems unprofitable.
+stencil.cc(23,3):remark #34055: adjacent dense (unit-strided stencil) loads are not optimized. Details: stride { 1 }, step { 1 }, types { I8-V256, I8-V256, I8-V256 }, number of elements { 32 }, select mask { 0x000000007 }.
+stencil.cc(4,104):remark #34051: REGISTER ALLOCATION : [_Z12ApplyStencilIhEvR10ImageClassIT_ES3_ii] stencil.cc:4
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   63[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm31 k0-k7]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   46[ rax rdx rcx rbx rsi rdi r8-r15 zmm0-zmm31]
+        
+    Routine temporaries
+        Total         :     314
+            Global    :      48
+            Local     :     266
+        Regenerable   :      55
+        Spilled       :      12
+        
+    Routine stack
+        Variables     :      48 bytes*
+            Reads     :       4 [0.00e+00 ~ 0.0%]
+            Writes    :      10 [2.60e+01 ~ 0.7%]
+        Spills        :     136 bytes*
+            Reads     :      31 [9.94e+01 ~ 2.6%]
+            Writes    :      26 [5.68e+01 ~ 1.5%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================

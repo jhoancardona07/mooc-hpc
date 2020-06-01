@@ -1,0 +1,152 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C++ Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 17.0.2.174 Build 20170213
+
+Compiler options: -I/opt/intel/compilers_and_libraries_2017.2.174/linux/mpi/intel64/include -c -qopenmp -qopt-report=5 -xMIC-AVX512 -c -o main.o
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char **)) [1/2=50.0%] main.cc(17,33)
+  -> EXTERN: (19,3) MPI_Init(int *, char ***)
+  -> EXTERN: (21,3) MPI_Comm_rank(MPI_Comm, int *)
+  -> EXTERN: (22,3) MPI_Comm_size(MPI_Comm, int *)
+  -> EXTERN: (25,5) printf(const char *, ...)
+  -> EXTERN: (26,5) exit(int)
+  -> EXTERN: (29,25) ImageClass<png_byte>::~ImageClass(ImageClass<png_byte> *)
+  -> EXTERN: (29,25) ImageClass<png_byte>::ImageClass(ImageClass<png_byte> *, const char *)
+  -> EXTERN: (30,39) ImageClass<png_byte>::~ImageClass(ImageClass<png_byte> *)
+  -> EXTERN: (30,39) ImageClass<png_byte>::ImageClass(ImageClass<png_byte> *, int, int)
+  -> EXTERN: (33,5) printf(const char *, ...)
+  -> EXTERN: (34,5) printf(const char *, ...)
+  -> EXTERN: (35,5) printf(const char *, ...)
+  -> EXTERN: (35,90) fflush(FILE *)
+  -> EXTERN: (42,5) MPI_Barrier(MPI_Comm)
+  -> EXTERN: (43,23) omp_get_wtime()
+  -> EXTERN: (44,5) ApplyStencil<png_byte>(ImageClass<png_byte> &, ImageClass<png_byte> &, int, int)
+  -> EXTERN: (45,5) MPI_Barrier(MPI_Comm)
+  -> EXTERN: (46,23) omp_get_wtime()
+  -> EXTERN: (64,7) printf(const char *, ...)
+  -> EXTERN: (66,7) fflush(FILE *)
+  -> INLINE: (71,5) Stats(double &, double &) (isz = 10) (sz = 19)
+  -> INLINE: (72,5) Stats(double &, double &) (isz = 10) (sz = 19)
+  -> INLINE: (73,5) Stats(double &, double &) (isz = 10) (sz = 19)
+  -> EXTERN: (74,5) printf(const char *, ...)
+  -> EXTERN: (75,5) printf(const char *, ...)
+  -> EXTERN: (77,5) printf(const char *, ...)
+  -> EXTERN: (78,5) printf(const char *, ...)
+  -> EXTERN: (83,11) ImageClass<png_byte>::WriteToFile(ImageClass<png_byte> *, char *, int, int)
+  -> EXTERN: (84,3) printf(const char *, ...)
+  -> EXTERN: (86,3) ImageClass<png_byte>::~ImageClass(ImageClass<png_byte> *)
+  -> EXTERN: (86,3) MPI_Finalize()
+  -> EXTERN: (86,3) ImageClass<png_byte>::~ImageClass(ImageClass<png_byte> *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at main.cc(40,3)
+   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ main.cc(42,5) ]
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+main.cc(17,33):remark #34051: REGISTER ALLOCATION : [main] main.cc:17
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   63[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm31 k0-k7]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   42[ rax rdx rcx rsi rdi r8 r12 zmm0-zmm31 k1-k3]
+        
+    Routine temporaries
+        Total         :     284
+            Global    :      32
+            Local     :     252
+        Regenerable   :      85
+        Spilled       :      14
+        
+    Routine stack
+        Variables     :     164 bytes*
+            Reads     :      20 [6.46e+01 ~ 8.2%]
+            Writes    :       9 [2.85e+00 ~ 0.4%]
+        Spills        :     112 bytes*
+            Reads     :      26 [4.75e+01 ~ 6.0%]
+            Writes    :      20 [4.65e+01 ~ 5.9%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: Stats(double &, double &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (Stats(double &, double &)) [2/2=100.0%] main.cc(12,39)
+
+
+    Report from: Code generation optimizations [cg]
+
+main.cc(12,39):remark #34051: REGISTER ALLOCATION : [_Z5StatsRdS_] main.cc:12
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   63[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm31 k0-k7]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   25[ rsi rdi zmm0-zmm5 zmm16-zmm31 k1]
+        
+    Routine temporaries
+        Total         :      49
+            Global    :       0
+            Local     :      49
+        Regenerable   :       4
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================

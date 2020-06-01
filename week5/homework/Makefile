@@ -13,5 +13,11 @@ worker.o : worker.cc L.o
 app : main.cc worker.o
 	${CXX} ${OPTRPT} ${CXXFLAGS} -o "$@" "$<" worker.o L.o
 
+run:	default
+	./app
+
+queue:	default
+	echo 'cd $$PBS_O_WORKDIR ; mpirun -machinefile $$PBS_NODEFILE ./app' | qsub -l nodes=4:flat -N app
+
 clean :
 	rm app worker.o L.o *.optrpt
